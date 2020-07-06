@@ -1,8 +1,8 @@
-import Layout from '../components/Layout';
-import { useQuery, gql } from '@apollo/client';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import Client from '../components/Client';
+import Layout from "../components/Layout";
+import { useQuery, gql } from "@apollo/client";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import Client from "../components/Client";
 
 const GET_CLIENTS_USER = gql`
   query getClientsBySeller {
@@ -20,9 +20,11 @@ const Index = () => {
   const { data, loading, error } = useQuery(GET_CLIENTS_USER);
   const router = useRouter();
 
-  if (loading) return 'Cargando....';
+  if (loading) return "Cargando....";
 
-  if (!data || error) return router.push('/login');
+  if (!data.getClientsBySeller) {
+    return router.push("/login");
+  }
 
   return (
     <div>
